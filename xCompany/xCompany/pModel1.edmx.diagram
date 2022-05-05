@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1ff7d323fad5430bb1b406ff5c94226c" Name="Diagram1">
+        <EntityTypeShape EntityType="Linq_ProjectModel.C_permission" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Linq_ProjectModel.Client" Width="1.5" PointX="0.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Linq_ProjectModel.Client_Quantity" Width="1.5" PointX="8.25" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Linq_ProjectModel.Prod_Measure" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Linq_ProjectModel.prod_Transfer" Width="1.5" PointX="6" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="Linq_ProjectModel.prod_WareHouse" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Linq_ProjectModel.Product" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="Linq_ProjectModel.S_permission" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Linq_ProjectModel.Sup_Quantity" Width="1.5" PointX="5.25" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Linq_ProjectModel.Supplier" Width="1.5" PointX="3.75" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Linq_ProjectModel.Warehouse" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <AssociationConnector Association="Linq_ProjectModel.c9" ManuallyRouted="false" />
+        <AssociationConnector Association="Linq_ProjectModel.FK_client_id" ManuallyRouted="false" />
+        <AssociationConnector Association="Linq_ProjectModel.FK_prod_code" ManuallyRouted="false" />
+        <AssociationConnector Association="Linq_ProjectModel.FK_warehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="Linq_ProjectModel.c8" ManuallyRouted="false" />
+        <AssociationConnector Association="Linq_ProjectModel.c6" ManuallyRouted="false" />
+        <AssociationConnector Association="Linq_ProjectModel.c7" ManuallyRouted="false" />
+        <AssociationConnector Association="Linq_ProjectModel.FK_p_code" ManuallyRouted="false" />
+        <AssociationConnector Association="Linq_ProjectModel.FK_FWH" ManuallyRouted="false" />
+        <AssociationConnector Association="Linq_ProjectModel.FK_PC" ManuallyRouted="false" />
+        <AssociationConnector Association="Linq_ProjectModel.FK_SUP" ManuallyRouted="false" />
+        <AssociationConnector Association="Linq_ProjectModel.FK_TWH" ManuallyRouted="false" />
+        <AssociationConnector Association="Linq_ProjectModel.FK_pp" ManuallyRouted="false" />
+        <AssociationConnector Association="Linq_ProjectModel.FK_pWH" ManuallyRouted="false" />
+        <AssociationConnector Association="Linq_ProjectModel.c2" ManuallyRouted="false" />
+        <AssociationConnector Association="Linq_ProjectModel.FK_product_code" ManuallyRouted="false" />
+        <AssociationConnector Association="Linq_ProjectModel.c4" ManuallyRouted="false" />
+        <AssociationConnector Association="Linq_ProjectModel.FK_s_id" ManuallyRouted="false" />
+        <AssociationConnector Association="Linq_ProjectModel.FK_WH" ManuallyRouted="false" />
+        <AssociationConnector Association="Linq_ProjectModel.c1" ManuallyRouted="false" />
+        <AssociationConnector Association="Linq_ProjectModel.c3" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

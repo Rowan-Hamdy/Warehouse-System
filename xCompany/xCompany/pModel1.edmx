@@ -1,0 +1,1141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Linq_ProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="C_permission">
+          <Key>
+            <PropertyRef Name="Per_id_C" />
+            <PropertyRef Name="P_code" />
+          </Key>
+          <Property Name="Per_id_C" Type="int" Nullable="false" />
+          <Property Name="WH_name" Type="varchar" MaxLength="20" />
+          <Property Name="P_code" Type="int" Nullable="false" />
+          <Property Name="C_per_date" Type="date" />
+          <Property Name="C_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="C_id" />
+          </Key>
+          <Property Name="C_id" Type="int" Nullable="false" />
+          <Property Name="C_email" Type="varchar" MaxLength="50" />
+          <Property Name="C_name" Type="varchar" MaxLength="20" />
+          <Property Name="C_fax" Type="int" />
+          <Property Name="C_mob_num" Type="int" />
+          <Property Name="C_tel_num" Type="int" />
+          <Property Name="C_website" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Client_Quantity">
+          <Key>
+            <PropertyRef Name="P_code" />
+            <PropertyRef Name="quantity" />
+            <PropertyRef Name="Per_id_C" />
+          </Key>
+          <Property Name="WH_Name" Type="varchar" MaxLength="20" />
+          <Property Name="P_code" Type="int" Nullable="false" />
+          <Property Name="C_id" Type="int" />
+          <Property Name="quantity" Type="int" Nullable="false" />
+          <Property Name="Per_id_C" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Prod_Measure">
+          <Key>
+            <PropertyRef Name="Measure_Unit" />
+            <PropertyRef Name="P_code" />
+          </Key>
+          <Property Name="Measure_Unit" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="P_code" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="prod_Transfer">
+          <Key>
+            <PropertyRef Name="transferID" />
+          </Key>
+          <Property Name="transferID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="from_wh" Type="varchar" MaxLength="20" />
+          <Property Name="to_wh" Type="varchar" MaxLength="20" />
+          <Property Name="p_code" Type="int" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="supplierID" Type="int" />
+          <Property Name="transferDate" Type="date" />
+        </EntityType>
+        <EntityType Name="prod_WareHouse">
+          <Key>
+            <PropertyRef Name="WH_Name" />
+            <PropertyRef Name="p_Code" />
+          </Key>
+          <Property Name="WH_Name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="p_Code" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="P_code" />
+          </Key>
+          <Property Name="P_code" Type="int" Nullable="false" />
+          <Property Name="P_name" Type="varchar" MaxLength="20" />
+          <Property Name="Prod_Date" Type="date" />
+          <Property Name="Exp_Date" Type="date" />
+        </EntityType>
+        <EntityType Name="S_permission">
+          <Key>
+            <PropertyRef Name="Per_id_S" />
+            <PropertyRef Name="P_code" />
+          </Key>
+          <Property Name="Per_id_S" Type="int" Nullable="false" />
+          <Property Name="WH_Name" Type="varchar" MaxLength="20" />
+          <Property Name="P_code" Type="int" Nullable="false" />
+          <Property Name="S_Per_date" Type="date" />
+          <Property Name="S_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Sup_Quantity">
+          <Key>
+            <PropertyRef Name="P_code" />
+            <PropertyRef Name="quantity" />
+            <PropertyRef Name="Per_id_S" />
+          </Key>
+          <Property Name="WH_Name" Type="varchar" MaxLength="20" />
+          <Property Name="P_code" Type="int" Nullable="false" />
+          <Property Name="S_id" Type="int" />
+          <Property Name="quantity" Type="int" Nullable="false" />
+          <Property Name="Per_id_S" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="S_id" />
+          </Key>
+          <Property Name="S_id" Type="int" Nullable="false" />
+          <Property Name="S_email" Type="varchar" MaxLength="50" />
+          <Property Name="S_name" Type="varchar" MaxLength="20" />
+          <Property Name="S_fax" Type="int" />
+          <Property Name="S_mob_num" Type="int" />
+          <Property Name="S_tel_num" Type="int" />
+          <Property Name="S_website" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="WH_Name" />
+          </Key>
+          <Property Name="WH_Name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="WH_Address" Type="varchar" MaxLength="50" />
+          <Property Name="WH_Manager" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="c1">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="Sup_Quantity" Type="Self.Sup_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="Sup_Quantity">
+              <PropertyRef Name="WH_Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c2">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Sup_Quantity" Type="Self.Sup_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="P_code" />
+            </Principal>
+            <Dependent Role="Sup_Quantity">
+              <PropertyRef Name="P_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c3">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Sup_Quantity" Type="Self.Sup_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="S_id" />
+            </Principal>
+            <Dependent Role="Sup_Quantity">
+              <PropertyRef Name="S_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c4">
+          <End Role="S_permission" Type="Self.S_permission" Multiplicity="1" />
+          <End Role="Sup_Quantity" Type="Self.Sup_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="S_permission">
+              <PropertyRef Name="Per_id_S" />
+              <PropertyRef Name="P_code" />
+            </Principal>
+            <Dependent Role="Sup_Quantity">
+              <PropertyRef Name="Per_id_S" />
+              <PropertyRef Name="P_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c6">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="Client_Quantity" Type="Self.Client_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="Client_Quantity">
+              <PropertyRef Name="WH_Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c7">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Client_Quantity" Type="Self.Client_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="P_code" />
+            </Principal>
+            <Dependent Role="Client_Quantity">
+              <PropertyRef Name="P_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c8">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Client_Quantity" Type="Self.Client_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="C_id" />
+            </Principal>
+            <Dependent Role="Client_Quantity">
+              <PropertyRef Name="C_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c9">
+          <End Role="C_permission" Type="Self.C_permission" Multiplicity="1" />
+          <End Role="Client_Quantity" Type="Self.Client_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C_permission">
+              <PropertyRef Name="Per_id_C" />
+              <PropertyRef Name="P_code" />
+            </Principal>
+            <Dependent Role="Client_Quantity">
+              <PropertyRef Name="Per_id_C" />
+              <PropertyRef Name="P_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_client_id">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="C_permission" Type="Self.C_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="C_id" />
+            </Principal>
+            <Dependent Role="C_permission">
+              <PropertyRef Name="C_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FWH">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="prod_Transfer" Type="Self.prod_Transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="prod_Transfer">
+              <PropertyRef Name="from_wh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_p_code">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Prod_Measure" Type="Self.Prod_Measure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="P_code" />
+            </Principal>
+            <Dependent Role="Prod_Measure">
+              <PropertyRef Name="P_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="prod_Transfer" Type="Self.prod_Transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="P_code" />
+            </Principal>
+            <Dependent Role="prod_Transfer">
+              <PropertyRef Name="p_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pp">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="prod_WareHouse" Type="Self.prod_WareHouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="P_code" />
+            </Principal>
+            <Dependent Role="prod_WareHouse">
+              <PropertyRef Name="p_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_prod_code">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="C_permission" Type="Self.C_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="P_code" />
+            </Principal>
+            <Dependent Role="C_permission">
+              <PropertyRef Name="P_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_product_code">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="S_permission" Type="Self.S_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="P_code" />
+            </Principal>
+            <Dependent Role="S_permission">
+              <PropertyRef Name="P_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pWH">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+          <End Role="prod_WareHouse" Type="Self.prod_WareHouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="prod_WareHouse">
+              <PropertyRef Name="WH_Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_s_id">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="S_permission" Type="Self.S_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="S_id" />
+            </Principal>
+            <Dependent Role="S_permission">
+              <PropertyRef Name="S_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SUP">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="prod_Transfer" Type="Self.prod_Transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="S_id" />
+            </Principal>
+            <Dependent Role="prod_Transfer">
+              <PropertyRef Name="supplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TWH">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="prod_Transfer" Type="Self.prod_Transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="prod_Transfer">
+              <PropertyRef Name="to_wh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="C_permission" Type="Self.C_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="C_permission">
+              <PropertyRef Name="WH_name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WH">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="S_permission" Type="Self.S_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="S_permission">
+              <PropertyRef Name="WH_Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Linq_ProjectModelStoreContainer">
+          <EntitySet Name="C_permission" EntityType="Self.C_permission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client_Quantity" EntityType="Self.Client_Quantity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Prod_Measure" EntityType="Self.Prod_Measure" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="prod_Transfer" EntityType="Self.prod_Transfer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="prod_WareHouse" EntityType="Self.prod_WareHouse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="S_permission" EntityType="Self.S_permission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sup_Quantity" EntityType="Self.Sup_Quantity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="c1" Association="Self.c1">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="Sup_Quantity" EntitySet="Sup_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="c2" Association="Self.c2">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Sup_Quantity" EntitySet="Sup_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="c3" Association="Self.c3">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="Sup_Quantity" EntitySet="Sup_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="c4" Association="Self.c4">
+            <End Role="S_permission" EntitySet="S_permission" />
+            <End Role="Sup_Quantity" EntitySet="Sup_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="c6" Association="Self.c6">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="Client_Quantity" EntitySet="Client_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="c7" Association="Self.c7">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Client_Quantity" EntitySet="Client_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="c8" Association="Self.c8">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Client_Quantity" EntitySet="Client_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="c9" Association="Self.c9">
+            <End Role="C_permission" EntitySet="C_permission" />
+            <End Role="Client_Quantity" EntitySet="Client_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_client_id" Association="Self.FK_client_id">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="C_permission" EntitySet="C_permission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FWH" Association="Self.FK_FWH">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="prod_Transfer" EntitySet="prod_Transfer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_p_code" Association="Self.FK_p_code">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Prod_Measure" EntitySet="Prod_Measure" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC" Association="Self.FK_PC">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="prod_Transfer" EntitySet="prod_Transfer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pp" Association="Self.FK_pp">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="prod_WareHouse" EntitySet="prod_WareHouse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_prod_code" Association="Self.FK_prod_code">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="C_permission" EntitySet="C_permission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_product_code" Association="Self.FK_product_code">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="S_permission" EntitySet="S_permission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pWH" Association="Self.FK_pWH">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="prod_WareHouse" EntitySet="prod_WareHouse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_s_id" Association="Self.FK_s_id">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="S_permission" EntitySet="S_permission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SUP" Association="Self.FK_SUP">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="prod_Transfer" EntitySet="prod_Transfer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TWH" Association="Self.FK_TWH">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="prod_Transfer" EntitySet="prod_Transfer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_warehouse" Association="Self.FK_warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="C_permission" EntitySet="C_permission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WH" Association="Self.FK_WH">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="S_permission" EntitySet="S_permission" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Linq_ProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C_permission">
+          <Key>
+            <PropertyRef Name="Per_id_C" />
+            <PropertyRef Name="P_code" />
+          </Key>
+          <Property Name="Per_id_C" Type="Int32" Nullable="false" />
+          <Property Name="WH_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="P_code" Type="Int32" Nullable="false" />
+          <Property Name="C_per_date" Type="DateTime" Precision="0" />
+          <Property Name="C_id" Type="Int32" />
+          <NavigationProperty Name="Client_Quantity" Relationship="Self.c9" FromRole="C_permission" ToRole="Client_Quantity" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_client_id" FromRole="C_permission" ToRole="Client" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_prod_code" FromRole="C_permission" ToRole="Product" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.FK_warehouse" FromRole="C_permission" ToRole="Warehouse" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="C_id" />
+          </Key>
+          <Property Name="C_id" Type="Int32" Nullable="false" />
+          <Property Name="C_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="C_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="C_fax" Type="Int32" />
+          <Property Name="C_mob_num" Type="Int32" />
+          <Property Name="C_tel_num" Type="Int32" />
+          <Property Name="C_website" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="C_permission" Relationship="Self.FK_client_id" FromRole="Client" ToRole="C_permission" />
+          <NavigationProperty Name="Client_Quantity" Relationship="Self.c8" FromRole="Client" ToRole="Client_Quantity" />
+        </EntityType>
+        <EntityType Name="Client_Quantity">
+          <Key>
+            <PropertyRef Name="P_code" />
+            <PropertyRef Name="quantity" />
+            <PropertyRef Name="Per_id_C" />
+          </Key>
+          <Property Name="WH_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="P_code" Type="Int32" Nullable="false" />
+          <Property Name="C_id" Type="Int32" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <Property Name="Per_id_C" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="C_permission" Relationship="Self.c9" FromRole="Client_Quantity" ToRole="C_permission" />
+          <NavigationProperty Name="Client" Relationship="Self.c8" FromRole="Client_Quantity" ToRole="Client" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.c6" FromRole="Client_Quantity" ToRole="Warehouse" />
+          <NavigationProperty Name="Product" Relationship="Self.c7" FromRole="Client_Quantity" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Prod_Measure">
+          <Key>
+            <PropertyRef Name="Measure_Unit" />
+            <PropertyRef Name="P_code" />
+          </Key>
+          <Property Name="Measure_Unit" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="P_code" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_p_code" FromRole="Prod_Measure" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="prod_Transfer">
+          <Key>
+            <PropertyRef Name="transferID" />
+          </Key>
+          <Property Name="transferID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="from_wh" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="to_wh" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="p_code" Type="Int32" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="supplierID" Type="Int32" />
+          <Property Name="transferDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.FK_FWH" FromRole="prod_Transfer" ToRole="Warehouse" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_PC" FromRole="prod_Transfer" ToRole="Product" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK_SUP" FromRole="prod_Transfer" ToRole="Supplier" />
+          <NavigationProperty Name="Warehouse1" Relationship="Self.FK_TWH" FromRole="prod_Transfer" ToRole="Warehouse" />
+        </EntityType>
+        <EntityType Name="prod_WareHouse">
+          <Key>
+            <PropertyRef Name="WH_Name" />
+            <PropertyRef Name="p_Code" />
+          </Key>
+          <Property Name="WH_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="p_Code" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_pp" FromRole="prod_WareHouse" ToRole="Product" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.FK_pWH" FromRole="prod_WareHouse" ToRole="Warehouse" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="P_code" />
+          </Key>
+          <Property Name="P_code" Type="Int32" Nullable="false" />
+          <Property Name="P_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Prod_Date" Type="DateTime" Precision="0" />
+          <Property Name="Exp_Date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="C_permission" Relationship="Self.FK_prod_code" FromRole="Product" ToRole="C_permission" />
+          <NavigationProperty Name="Client_Quantity" Relationship="Self.c7" FromRole="Product" ToRole="Client_Quantity" />
+          <NavigationProperty Name="Prod_Measure" Relationship="Self.FK_p_code" FromRole="Product" ToRole="Prod_Measure" />
+          <NavigationProperty Name="prod_Transfer" Relationship="Self.FK_PC" FromRole="Product" ToRole="prod_Transfer" />
+          <NavigationProperty Name="prod_WareHouse" Relationship="Self.FK_pp" FromRole="Product" ToRole="prod_WareHouse" />
+          <NavigationProperty Name="Sup_Quantity" Relationship="Self.c2" FromRole="Product" ToRole="Sup_Quantity" />
+          <NavigationProperty Name="S_permission" Relationship="Self.FK_product_code" FromRole="Product" ToRole="S_permission" />
+        </EntityType>
+        <EntityType Name="S_permission">
+          <Key>
+            <PropertyRef Name="Per_id_S" />
+            <PropertyRef Name="P_code" />
+          </Key>
+          <Property Name="Per_id_S" Type="Int32" Nullable="false" />
+          <Property Name="WH_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="P_code" Type="Int32" Nullable="false" />
+          <Property Name="S_Per_date" Type="DateTime" Precision="0" />
+          <Property Name="S_id" Type="Int32" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_product_code" FromRole="S_permission" ToRole="Product" />
+          <NavigationProperty Name="Sup_Quantity" Relationship="Self.c4" FromRole="S_permission" ToRole="Sup_Quantity" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK_s_id" FromRole="S_permission" ToRole="Supplier" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.FK_WH" FromRole="S_permission" ToRole="Warehouse" />
+        </EntityType>
+        <EntityType Name="Sup_Quantity">
+          <Key>
+            <PropertyRef Name="P_code" />
+            <PropertyRef Name="quantity" />
+            <PropertyRef Name="Per_id_S" />
+          </Key>
+          <Property Name="WH_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="P_code" Type="Int32" Nullable="false" />
+          <Property Name="S_id" Type="Int32" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <Property Name="Per_id_S" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.c2" FromRole="Sup_Quantity" ToRole="Product" />
+          <NavigationProperty Name="S_permission" Relationship="Self.c4" FromRole="Sup_Quantity" ToRole="S_permission" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.c1" FromRole="Sup_Quantity" ToRole="Warehouse" />
+          <NavigationProperty Name="Supplier" Relationship="Self.c3" FromRole="Sup_Quantity" ToRole="Supplier" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="S_id" />
+          </Key>
+          <Property Name="S_id" Type="Int32" Nullable="false" />
+          <Property Name="S_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="S_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="S_fax" Type="Int32" />
+          <Property Name="S_mob_num" Type="Int32" />
+          <Property Name="S_tel_num" Type="Int32" />
+          <Property Name="S_website" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="prod_Transfer" Relationship="Self.FK_SUP" FromRole="Supplier" ToRole="prod_Transfer" />
+          <NavigationProperty Name="S_permission" Relationship="Self.FK_s_id" FromRole="Supplier" ToRole="S_permission" />
+          <NavigationProperty Name="Sup_Quantity" Relationship="Self.c3" FromRole="Supplier" ToRole="Sup_Quantity" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="WH_Name" />
+          </Key>
+          <Property Name="WH_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="WH_Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WH_Manager" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="C_permission" Relationship="Self.FK_warehouse" FromRole="Warehouse" ToRole="C_permission" />
+          <NavigationProperty Name="Client_Quantity" Relationship="Self.c6" FromRole="Warehouse" ToRole="Client_Quantity" />
+          <NavigationProperty Name="prod_Transfer" Relationship="Self.FK_FWH" FromRole="Warehouse" ToRole="prod_Transfer" />
+          <NavigationProperty Name="prod_Transfer1" Relationship="Self.FK_TWH" FromRole="Warehouse" ToRole="prod_Transfer" />
+          <NavigationProperty Name="prod_WareHouse" Relationship="Self.FK_pWH" FromRole="Warehouse" ToRole="prod_WareHouse" />
+          <NavigationProperty Name="S_permission" Relationship="Self.FK_WH" FromRole="Warehouse" ToRole="S_permission" />
+          <NavigationProperty Name="Sup_Quantity" Relationship="Self.c1" FromRole="Warehouse" ToRole="Sup_Quantity" />
+        </EntityType>
+        <Association Name="c9">
+          <End Role="C_permission" Type="Self.C_permission" Multiplicity="1" />
+          <End Role="Client_Quantity" Type="Self.Client_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C_permission">
+              <PropertyRef Name="Per_id_C" />
+              <PropertyRef Name="P_code" />
+            </Principal>
+            <Dependent Role="Client_Quantity">
+              <PropertyRef Name="Per_id_C" />
+              <PropertyRef Name="P_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_client_id">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="C_permission" Type="Self.C_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="C_id" />
+            </Principal>
+            <Dependent Role="C_permission">
+              <PropertyRef Name="C_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_prod_code">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="C_permission" Type="Self.C_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="P_code" />
+            </Principal>
+            <Dependent Role="C_permission">
+              <PropertyRef Name="P_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="C_permission" Type="Self.C_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="C_permission">
+              <PropertyRef Name="WH_name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c8">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Client_Quantity" Type="Self.Client_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="C_id" />
+            </Principal>
+            <Dependent Role="Client_Quantity">
+              <PropertyRef Name="C_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c6">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="Client_Quantity" Type="Self.Client_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="Client_Quantity">
+              <PropertyRef Name="WH_Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c7">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Client_Quantity" Type="Self.Client_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="P_code" />
+            </Principal>
+            <Dependent Role="Client_Quantity">
+              <PropertyRef Name="P_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_p_code">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Prod_Measure" Type="Self.Prod_Measure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="P_code" />
+            </Principal>
+            <Dependent Role="Prod_Measure">
+              <PropertyRef Name="P_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FWH">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="prod_Transfer" Type="Self.prod_Transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="prod_Transfer">
+              <PropertyRef Name="from_wh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="prod_Transfer" Type="Self.prod_Transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="P_code" />
+            </Principal>
+            <Dependent Role="prod_Transfer">
+              <PropertyRef Name="p_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SUP">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="prod_Transfer" Type="Self.prod_Transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="S_id" />
+            </Principal>
+            <Dependent Role="prod_Transfer">
+              <PropertyRef Name="supplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TWH">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="prod_Transfer" Type="Self.prod_Transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="prod_Transfer">
+              <PropertyRef Name="to_wh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pp">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="prod_WareHouse" Type="Self.prod_WareHouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="P_code" />
+            </Principal>
+            <Dependent Role="prod_WareHouse">
+              <PropertyRef Name="p_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pWH">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+          <End Role="prod_WareHouse" Type="Self.prod_WareHouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="prod_WareHouse">
+              <PropertyRef Name="WH_Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c2">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Sup_Quantity" Type="Self.Sup_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="P_code" />
+            </Principal>
+            <Dependent Role="Sup_Quantity">
+              <PropertyRef Name="P_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_product_code">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="S_permission" Type="Self.S_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="P_code" />
+            </Principal>
+            <Dependent Role="S_permission">
+              <PropertyRef Name="P_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c4">
+          <End Role="S_permission" Type="Self.S_permission" Multiplicity="1" />
+          <End Role="Sup_Quantity" Type="Self.Sup_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="S_permission">
+              <PropertyRef Name="Per_id_S" />
+              <PropertyRef Name="P_code" />
+            </Principal>
+            <Dependent Role="Sup_Quantity">
+              <PropertyRef Name="Per_id_S" />
+              <PropertyRef Name="P_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_s_id">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="S_permission" Type="Self.S_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="S_id" />
+            </Principal>
+            <Dependent Role="S_permission">
+              <PropertyRef Name="S_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WH">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="S_permission" Type="Self.S_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="S_permission">
+              <PropertyRef Name="WH_Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c1">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="Sup_Quantity" Type="Self.Sup_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WH_Name" />
+            </Principal>
+            <Dependent Role="Sup_Quantity">
+              <PropertyRef Name="WH_Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="c3">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Sup_Quantity" Type="Self.Sup_Quantity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="S_id" />
+            </Principal>
+            <Dependent Role="Sup_Quantity">
+              <PropertyRef Name="S_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Linq_ProjectEntities3" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C_permission" EntityType="Self.C_permission" />
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="Client_Quantity" EntityType="Self.Client_Quantity" />
+          <EntitySet Name="Prod_Measure" EntityType="Self.Prod_Measure" />
+          <EntitySet Name="prod_Transfer" EntityType="Self.prod_Transfer" />
+          <EntitySet Name="prod_WareHouse" EntityType="Self.prod_WareHouse" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="S_permission" EntityType="Self.S_permission" />
+          <EntitySet Name="Sup_Quantity" EntityType="Self.Sup_Quantity" />
+          <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+          <EntitySet Name="Warehouses" EntityType="Self.Warehouse" />
+          <AssociationSet Name="c9" Association="Self.c9">
+            <End Role="C_permission" EntitySet="C_permission" />
+            <End Role="Client_Quantity" EntitySet="Client_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_client_id" Association="Self.FK_client_id">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="C_permission" EntitySet="C_permission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_prod_code" Association="Self.FK_prod_code">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="C_permission" EntitySet="C_permission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_warehouse" Association="Self.FK_warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="C_permission" EntitySet="C_permission" />
+          </AssociationSet>
+          <AssociationSet Name="c8" Association="Self.c8">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Client_Quantity" EntitySet="Client_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="c6" Association="Self.c6">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="Client_Quantity" EntitySet="Client_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="c7" Association="Self.c7">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Client_Quantity" EntitySet="Client_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_p_code" Association="Self.FK_p_code">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Prod_Measure" EntitySet="Prod_Measure" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FWH" Association="Self.FK_FWH">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="prod_Transfer" EntitySet="prod_Transfer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC" Association="Self.FK_PC">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="prod_Transfer" EntitySet="prod_Transfer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SUP" Association="Self.FK_SUP">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="prod_Transfer" EntitySet="prod_Transfer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TWH" Association="Self.FK_TWH">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="prod_Transfer" EntitySet="prod_Transfer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pp" Association="Self.FK_pp">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="prod_WareHouse" EntitySet="prod_WareHouse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pWH" Association="Self.FK_pWH">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="prod_WareHouse" EntitySet="prod_WareHouse" />
+          </AssociationSet>
+          <AssociationSet Name="c2" Association="Self.c2">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Sup_Quantity" EntitySet="Sup_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_product_code" Association="Self.FK_product_code">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="S_permission" EntitySet="S_permission" />
+          </AssociationSet>
+          <AssociationSet Name="c4" Association="Self.c4">
+            <End Role="S_permission" EntitySet="S_permission" />
+            <End Role="Sup_Quantity" EntitySet="Sup_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_s_id" Association="Self.FK_s_id">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="S_permission" EntitySet="S_permission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WH" Association="Self.FK_WH">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="S_permission" EntitySet="S_permission" />
+          </AssociationSet>
+          <AssociationSet Name="c1" Association="Self.c1">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="Sup_Quantity" EntitySet="Sup_Quantity" />
+          </AssociationSet>
+          <AssociationSet Name="c3" Association="Self.c3">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Sup_Quantity" EntitySet="Sup_Quantity" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Linq_ProjectModelStoreContainer" CdmEntityContainer="Linq_ProjectEntities3">
+          <EntitySetMapping Name="C_permission">
+            <EntityTypeMapping TypeName="Linq_ProjectModel.C_permission">
+              <MappingFragment StoreEntitySet="C_permission">
+                <ScalarProperty Name="Per_id_C" ColumnName="Per_id_C" />
+                <ScalarProperty Name="WH_name" ColumnName="WH_name" />
+                <ScalarProperty Name="P_code" ColumnName="P_code" />
+                <ScalarProperty Name="C_per_date" ColumnName="C_per_date" />
+                <ScalarProperty Name="C_id" ColumnName="C_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="Linq_ProjectModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="C_id" ColumnName="C_id" />
+                <ScalarProperty Name="C_email" ColumnName="C_email" />
+                <ScalarProperty Name="C_name" ColumnName="C_name" />
+                <ScalarProperty Name="C_fax" ColumnName="C_fax" />
+                <ScalarProperty Name="C_mob_num" ColumnName="C_mob_num" />
+                <ScalarProperty Name="C_tel_num" ColumnName="C_tel_num" />
+                <ScalarProperty Name="C_website" ColumnName="C_website" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Client_Quantity">
+            <EntityTypeMapping TypeName="Linq_ProjectModel.Client_Quantity">
+              <MappingFragment StoreEntitySet="Client_Quantity">
+                <ScalarProperty Name="WH_Name" ColumnName="WH_Name" />
+                <ScalarProperty Name="P_code" ColumnName="P_code" />
+                <ScalarProperty Name="C_id" ColumnName="C_id" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="Per_id_C" ColumnName="Per_id_C" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prod_Measure">
+            <EntityTypeMapping TypeName="Linq_ProjectModel.Prod_Measure">
+              <MappingFragment StoreEntitySet="Prod_Measure">
+                <ScalarProperty Name="Measure_Unit" ColumnName="Measure_Unit" />
+                <ScalarProperty Name="P_code" ColumnName="P_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="prod_Transfer">
+            <EntityTypeMapping TypeName="Linq_ProjectModel.prod_Transfer">
+              <MappingFragment StoreEntitySet="prod_Transfer">
+                <ScalarProperty Name="transferID" ColumnName="transferID" />
+                <ScalarProperty Name="from_wh" ColumnName="from_wh" />
+                <ScalarProperty Name="to_wh" ColumnName="to_wh" />
+                <ScalarProperty Name="p_code" ColumnName="p_code" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="supplierID" ColumnName="supplierID" />
+                <ScalarProperty Name="transferDate" ColumnName="transferDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="prod_WareHouse">
+            <EntityTypeMapping TypeName="Linq_ProjectModel.prod_WareHouse">
+              <MappingFragment StoreEntitySet="prod_WareHouse">
+                <ScalarProperty Name="WH_Name" ColumnName="WH_Name" />
+                <ScalarProperty Name="p_Code" ColumnName="p_Code" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="Linq_ProjectModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="P_code" ColumnName="P_code" />
+                <ScalarProperty Name="P_name" ColumnName="P_name" />
+                <ScalarProperty Name="Prod_Date" ColumnName="Prod_Date" />
+                <ScalarProperty Name="Exp_Date" ColumnName="Exp_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="S_permission">
+            <EntityTypeMapping TypeName="Linq_ProjectModel.S_permission">
+              <MappingFragment StoreEntitySet="S_permission">
+                <ScalarProperty Name="Per_id_S" ColumnName="Per_id_S" />
+                <ScalarProperty Name="WH_Name" ColumnName="WH_Name" />
+                <ScalarProperty Name="P_code" ColumnName="P_code" />
+                <ScalarProperty Name="S_Per_date" ColumnName="S_Per_date" />
+                <ScalarProperty Name="S_id" ColumnName="S_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sup_Quantity">
+            <EntityTypeMapping TypeName="Linq_ProjectModel.Sup_Quantity">
+              <MappingFragment StoreEntitySet="Sup_Quantity">
+                <ScalarProperty Name="WH_Name" ColumnName="WH_Name" />
+                <ScalarProperty Name="P_code" ColumnName="P_code" />
+                <ScalarProperty Name="S_id" ColumnName="S_id" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="Per_id_S" ColumnName="Per_id_S" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="Linq_ProjectModel.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="S_id" ColumnName="S_id" />
+                <ScalarProperty Name="S_email" ColumnName="S_email" />
+                <ScalarProperty Name="S_name" ColumnName="S_name" />
+                <ScalarProperty Name="S_fax" ColumnName="S_fax" />
+                <ScalarProperty Name="S_mob_num" ColumnName="S_mob_num" />
+                <ScalarProperty Name="S_tel_num" ColumnName="S_tel_num" />
+                <ScalarProperty Name="S_website" ColumnName="S_website" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Warehouses">
+            <EntityTypeMapping TypeName="Linq_ProjectModel.Warehouse">
+              <MappingFragment StoreEntitySet="Warehouse">
+                <ScalarProperty Name="WH_Name" ColumnName="WH_Name" />
+                <ScalarProperty Name="WH_Address" ColumnName="WH_Address" />
+                <ScalarProperty Name="WH_Manager" ColumnName="WH_Manager" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
